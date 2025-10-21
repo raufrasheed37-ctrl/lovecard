@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoveCard</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #0e2d38; 
+      font-family: "Poppins", sans-serif;
+      color: #fff;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .names {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    h1 {
+      
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff4da6, #ffb3ec, #ffffff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px #ff4da6, 0 0 20px #ffb3ec, 0 0 30px #ffffff;
+  letter-spacing: 1.5px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #ff4da6, 0 0 20px #ffb3ec, 0 0 30px #ffffff;
+  }
+  to {
+    text-shadow: 0 0 20px #ff4da6, 0 0 30px #ffb3ec, 0 0 40px #ffffff;
+  }
+}
+
+    .buttons {
+      display: flex;
+      gap: 30px;
+    }
+
+    button {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .yes {
+      background-color: #ff3366;
+      color: #fff;
+      box-shadow: 0 6px 15px rgba(255, 51, 102, 0.4);
+    }
+
+    .yes:hover {
+      background-color: #ff6699;
+      transform: scale(1.05);
+    }
+
+    .no {
+      background-color: #fff;
+      color: #ff3366;
+      position: absolute;
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 24px;
+      animation: floatUp 6s infinite ease-in;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0) scale(1); opacity: 1; }
+      to { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+  h1 {
+    font-size: 1.4rem;
+    padding: 0 15px;
+  }
+  button {
+    padding: 12px 25px;
+    font-size: 0.9rem;
+  }
+  .buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="names">💞 Rasheed ❤️ Roqeebah 💞</div>
+  <h1>Will you be my girlfriend?</h1>
+
+  <div class="buttons">
+    <button class="yes" onclick="sayYes()">Yes 😍</button>
+    <button class="no" id="noBtn">No 😅</button>
+  </div>
+
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/06/audio_8c11e7dd19.mp3?filename=romantic-background-music-141296.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.random() * (window.innerWidth - noBtn.clientWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.clientHeight);
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    });
+
+    function sayYes() {
+      const formURL = "https://formspree.io/f/xkgqapdo";
+
+      fetch(formURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: "Roqeebah said YES 💖" })
+      }).catch(err => console.error('Error sending notification:', err));
+
+      document.body.innerHTML = `
+        <h1 style="color:white; text-align:center; font-size:3rem; margin-top:20%;">
+          Yay!!! 🥰<br>Roqeebah said YES! 💖
+        </h1>
+      `;
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (12 + Math.random() * 20) + "px";
+      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    setInterval(createHeart, 400);
+  </script>
+</body>
+</html>

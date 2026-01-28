@@ -120,7 +120,7 @@
   </style>
 </head>
 <body>
-  <div class="names">💞 Rasheed ❤️ Roqeebah 💞</div>
+  <div class="names">💞 Rasheed ❤️ Success 💞</div>
   <h1>Will you be my girlfriend?</h1>
 
   <div class="buttons">
@@ -151,14 +151,14 @@ noBtn.addEventListener("touchstart", moveNoButton);
       fetch(formURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: "Roqeebah said YES 💖" }),
+        body: JSON.stringify({ message: "Success said YES 💖" }),
       }).catch((err) =>
         console.error("Error sending notification:", err)
       );
 
       document.body.innerHTML = `
         <h1 style="color:white; text-align:center; font-size:3rem; margin-top:20%;">
-          Yay!!! 🥰<br>Roqeebah said YES! 💖
+          Yay!!! 🥰<br>Success said YES! 💖
         </h1>
       `;
     }

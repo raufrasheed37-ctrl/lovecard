@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LoveCard</title>
+
   <style>
     body {
       margin: 0;
@@ -17,6 +18,29 @@
       color: #fff;
       overflow: hidden;
       text-align: center;
+    }
+
+    /* 🌫️ Glass Photo Background */
+    .glass-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("yourphoto.jpg") center/cover no-repeat;
+      filter: blur(8px) brightness(0.6);
+      z-index: -2;
+    }
+
+    .glass-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.05);
+      z-index: -1;
     }
 
     .names {
@@ -46,7 +70,6 @@
       }
     }
 
-    /* ✅ Fix: Make Yes and No stay side by side */
     .buttons {
       display: flex;
       justify-content: center;
@@ -78,7 +101,6 @@
       transform: scale(1.05);
     }
 
-    /* ✅ Fix: Keep No button inline until hover */
     .no {
       background-color: #fff;
       color: #ff3366;
@@ -119,8 +141,14 @@
     }
   </style>
 </head>
+
 <body>
-  <div class="names">💞 Rasheed ❤️ Success 💞</div>
+
+  <!-- 🌫️ Glass Background Layers -->
+  <div class="glass-bg"></div>
+  <div class="glass-overlay"></div>
+
+  <div class="names">💞 Rasheed ❤️ Feyishara 💞</div>
   <h1>Will you be my girlfriend?</h1>
 
   <div class="buttons">
@@ -128,41 +156,56 @@
     <button class="no" id="noBtn">No 😅</button>
   </div>
 
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2023/03/06/audio_8c11e7dd19.mp3?filename=romantic-background-music-141296.mp3" type="audio/mpeg" />
-    Your browser does not support the audio element.
+  <!-- 🎵 Your Background Music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="yoursong.mp3" type="audio/mpeg">
   </audio>
 
   <script>
+    const noBtn = document.getElementById("noBtn");
+
     function moveNoButton() {
-  noBtn.style.position = "fixed"; // 
-  const x = Math.random() * (window.innerWidth - noBtn.clientWidth);
-  const y = Math.random() * (window.innerHeight - noBtn.clientHeight - 50);
-  noBtn.style.left = `${x}px`;
-  noBtn.style.top = `${y}px`;
-}
- 
-noBtn.addEventListener("mouseover", moveNoButton); 
-noBtn.addEventListener("touchstart", moveNoButton); 
+      noBtn.style.position = "fixed";
+      const x = Math.random() * (window.innerWidth - noBtn.clientWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.clientHeight - 50);
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    }
+
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton);
 
     function sayYes() {
       const formURL = "https://formspree.io/f/xkgqapdo";
 
+      /* 📩 Form notification */
       fetch(formURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: "Success said YES 💖" }),
+        body: JSON.stringify({ message: "Feyishara said YES 💖" }),
       }).catch((err) =>
         console.error("Error sending notification:", err)
       );
 
+      /* 📱 WhatsApp notification */
+      const phoneNumber = "234XXXXXXXXXX";
+      const message = encodeURIComponent(
+        "Hi Rasheed 💖 I just said YES 🥰"
+      );
+
+      window.open(
+        `https://wa.me/${phoneNumber}?text=${message}`,
+        "_blank"
+      );
+
       document.body.innerHTML = `
         <h1 style="color:white; text-align:center; font-size:3rem; margin-top:20%;">
-          Yay!!! 🥰<br>Success said YES! 💖
+          Yay!!! 🥰<br>Feyishara said YES! 💖
         </h1>
       `;
     }
 
+    /* ❤️ Floating hearts */
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -175,6 +218,12 @@ noBtn.addEventListener("touchstart", moveNoButton);
     }
 
     setInterval(createHeart, 400);
+
+    /* 🔊 Autoplay fix for phones */
+    document.addEventListener("click", () => {
+      const music = document.getElementById("bgMusic");
+      music.play();
+    });
   </script>
 </body>
 </html>
